@@ -1,7 +1,6 @@
 package store
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/dgraph-io/badger/v4"
 	"go_job_queue/internal/job"
@@ -37,10 +36,13 @@ func (b *BadgerStore) Get(id string) (job.Job, error) {
 			return err2
 		}
 
-		err2 = json.Unmarshal(val, &j)
+		decoded, err2 := job.Decode(val)
 		if err2 != nil {
 			return err2
 		}
+
+		j = decoded
+
 		return nil
 	})
 

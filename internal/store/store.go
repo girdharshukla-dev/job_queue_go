@@ -9,4 +9,5 @@ type Store interface {
 	Close() error
 }
 
+var _ Store = (*BadgerStore)(nil)
 
